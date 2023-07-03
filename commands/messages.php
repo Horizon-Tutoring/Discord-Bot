@@ -26,10 +26,13 @@ use Discord\Parts\User\Activity;
             return;
         }
 
-        // Shutdown Bot Code
+        // Ping Bot Code
         if ($message->content == '!ping') {
-            $message->reply('Pong!')->done(function (Message $message) use ($discord) {
-
+            $message->reply('pong!')->done(function (Message $message) {
+                // Schedule the deletion after 1 minute
+                $discord->loop->addTimer(60, function () use ($message) {
+                    $message->delete();
+                });
             });
             return;
         }
