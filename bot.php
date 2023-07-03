@@ -25,7 +25,7 @@ $discord->on('ready', function (Discord $discord) {
         'type' => \Discord\Parts\User\Activity::TYPE_LISTENING,
     ]);
     
-    $discord->updatePresence($activity, false, 'dnd', false);
+    $discord->updatePresence($activity, false, 'online', false);
 
     include __DIR__.'/commands/messages.php';
 });

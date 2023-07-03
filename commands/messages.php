@@ -12,7 +12,8 @@ use Discord\Parts\User\Activity;
         // CHANNELS ALLOWED
         $allowedChannels = [
         '1045223017518743602', //devops
-        '1037188637000994899' //general
+        '1037188637000994899', //general
+        '1125445580794110013' //bot-requests
         ];
 
         // Check if the message is from an allowed channel
@@ -22,6 +23,14 @@ use Discord\Parts\User\Activity;
 
         // Ignore Bot Messages
         if ($message->author->id == $discord->user->id) {
+            return;
+        }
+
+        // Shutdown Bot Code
+        if ($message->content == '!ping') {
+            $message->reply('Pong!')->done(function (Message $message) use ($discord) {
+
+            });
             return;
         }
 
