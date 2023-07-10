@@ -2,6 +2,8 @@
 
 include __DIR__.'/vendor/autoload.php';
 
+set_time_limit(60);
+
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Intents;
@@ -10,8 +12,6 @@ use Discord\Parts\User\Activity;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-$discord->close();
 
 $discord = new Discord([
     'token' => $_ENV['BOT_TOKEN'],
