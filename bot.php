@@ -11,6 +11,8 @@ use Discord\Parts\User\Activity;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+$discord->close();
+
 $discord = new Discord([
     'token' => $_ENV['BOT_TOKEN'],
     'intents' => Intents::getDefaultIntents()
