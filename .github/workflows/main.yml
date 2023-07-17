@@ -18,4 +18,4 @@ jobs:
         username: github@horizontutoring.com.au
         password: ${{ secrets.FTP_PASSWORD }}
         timeout: 120000
-        server-dir: horizontutoring.com.au/live/discord-bot/
+        server-dir: horizontutoring.com.au/live/discord/
