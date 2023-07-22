@@ -20,9 +20,7 @@ require_once 'required_functions.php';
         } else {
         // Live Bot Channels
         $allowedChannels = [
-            '1045223017518743602', //devops
-            '1037188637000994899', //general
-            '1125445580794110013', //bot-requests
+            $_ENV['BOT_REQ'],
             ];
         }
         // Check if the message is from an allowed channel
