@@ -162,15 +162,15 @@ if(count($discord_results) > 0) {
                 $channel = $discord->getChannel($_ENV[$m_channel]);
                     
                 // Send the message in the channel
-                $channel->sendMessage('**[' . date('H:i:s') . ' - ' . $content->title . ']** ' . $content->content . '.');
+                $channel->sendMessage('**[' . date('H:i:s') . ' - ' . $content->title . ']** ' . $content->content);
             }
         }
 
-         // Create a BotLog that the Embed Message was completed.
+         // Create a BotLog that Message was completed.
          SendBotLog(
             $discord, 
             'API', 
-            count($discord_results) . ' action(s) have been completed.'
+            count($discord_results) . ' action(s) have been completed'
         );
 
         // Update all DB entries so they do not get sent more than once.
