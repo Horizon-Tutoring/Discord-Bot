@@ -151,6 +151,7 @@ if(count($discord_results) > 0) {
                     $discord,
                     $channel,
                     $content->title,
+                    $content->message,
                     $content->content,
                     $content->color,
                     $content->footer

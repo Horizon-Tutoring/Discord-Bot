@@ -22,7 +22,7 @@ function SendBotLog($discord, $type, $details) {
     $channel->sendMessage('**[' . date('H:i:s') . ' - ' . $type . ']** ' . $details . '.');
 }
 
-function SendEmbedMessage($discord, $channel, $title, $description, $color, $footer) {
+function SendEmbedMessage($discord, $channel, $title, $message, $description, $color, $footer) {
     $embed = new Embed($discord);
 
     // Set the title, description (content), color, and footer for the embed
@@ -31,7 +31,9 @@ function SendEmbedMessage($discord, $channel, $title, $description, $color, $foo
         ->setDescription($description)
         ->setColor($color) // You can specify a color in decimal format (e.g., 0xFF0000 for red)
         ->setFooter($footer);
+
+
                 
     // Send the embed message in the channel
-    $channel->sendEmbed($embed);
+    $channel->sendMessage($message, false, $embed);
 }

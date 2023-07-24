@@ -1,5 +1,8 @@
 <?php
 
+// Removing Bot Running Limit.
+set_time_limit(0);
+
 $lockFile = __DIR__.'/bot-script.lock';
 
 // Check if lock file exists
