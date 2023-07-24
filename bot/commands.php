@@ -112,7 +112,7 @@ require_once 'required_functions.php';
                 $responseMessage->delete();
 
                 // Find the channel by its ID
-                $channel = $discord->getChannel($_ENV['SERVER_LOGS']);
+                $channel = $discord->getChannel($_ENV['BOT_LOGS']);
         
                 // Send the message in the channel
                 $channel->sendMessage('**[' . date('H:i:s') . ' - SHUTDOWN]** Bot Service Stopping. Bot will auto restart next hour.')
