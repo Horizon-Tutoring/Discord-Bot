@@ -78,13 +78,13 @@ $httpClient = new GuzzleHttp\Client();
 
        // Decode the JSON response body and ensure it's always an array
         $discord_results = (array) json_decode($response->getBody(), true);
-
+        
         // Convert the array elements to objects for usage
         foreach ($discord_results as $key => $value) {
             $discord_results[$key] = (object) $value;
         }
 
-        // print_r($discord_results);
+        print_r($discord_results);
 
         // Create IDs that need to be updated.
         $api_ids = [];
@@ -143,6 +143,19 @@ if(count($discord_results) > 0) {
 
             #CONTENT TYPE 1 --- EMBED OPTION
             if($content->type == "1"){
+                if($content->message == null){
+                    $message = '';
+                } else {
+                    $message = $content->message;
+                }
+
+                if($content->url == null){
+                    $url = '';
+                } else {
+                    $url = $content->url;
+                }
+
+
                 // Get Channel based of ENV file
                 $channel = $discord->getChannel($_ENV[$m_channel]);
 
@@ -151,7 +164,8 @@ if(count($discord_results) > 0) {
                     $discord,
                     $channel,
                     $content->title,
-                    $content->message,
+                    $message,
+                    $url,
                     $content->content,
                     $content->color,
                     $content->footer

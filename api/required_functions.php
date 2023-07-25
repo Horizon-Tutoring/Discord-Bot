@@ -22,12 +22,13 @@ function SendBotLog($discord, $type, $details) {
     $channel->sendMessage('**[' . date('H:i:s') . ' - ' . $type . ']** ' . $details . '.');
 }
 
-function SendEmbedMessage($discord, $channel, $title, $message, $description, $color, $footer) {
+function SendEmbedMessage($discord, $channel, $title, $message, $url, $description, $color, $footer) {
     $embed = new Embed($discord);
 
     // Set the title, description (content), color, and footer for the embed
     $embed
         ->setTitle($title)
+        ->setUrl($url)
         ->setDescription($description)
         ->setColor($color) // You can specify a color in decimal format (e.g., 0xFF0000 for red)
         ->setFooter($footer);
