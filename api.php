@@ -60,7 +60,7 @@ $dotenv->load();
 date_default_timezone_set('Australia/Brisbane');
 
 // Script Set to run for 60 seconds. Thence terminate the bot.
-set_time_limit(60);
+ini_set('max_execution_time', 60);
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
