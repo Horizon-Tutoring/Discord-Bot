@@ -10,7 +10,7 @@ if (file_exists($botRunning)) {
     $pid = intval(file_get_contents($botRunning));
 
     // Check if the process with the stored PID is still running
-    if (isProcessRunning($pid)) {
+    if (isBotRunning($pid)) {
         // Another instance is running, exit the current script
         echo "[CHECK] Horizon Bot Service is running.\n\n";
 
@@ -24,13 +24,22 @@ if (file_exists($botRunning)) {
 if (file_exists($lockFile)) {
 
     // Check the PID stored in the lock file
-    $pid = intval(file_get_contents($lockFile));
+    $pid2 = intval(file_get_contents($lockFile));
 
     // Check if the process with the stored PID is still running
-    if (isProcessRunning($pid)) {
-        // Another instance is running, exit the current script
-        echo "[SYSTEM] The Horizon Tutoring Bot is still running on the server. Exiting restart script.\n";
-        exit;
+    if (isProcessRunning($pid2)) {
+        // Another instance is running, terminate the previous script
+        echo "[SYSTEM] The Horizon Tutoring Bot is still running on the server. Terminating previous script.\n";
+
+        // Attempt to terminate the previous script
+        if (posix_kill($pid, SIGTERM)) {
+            echo "[SYSTEM] Previous script terminated successfully.\n";
+        } else {
+            echo "[SYSTEM] Failed to terminate the previous script.\n";
+        }
+
+        // Remove the lock file
+        unlink($lockFile);
 
     } else {
         // The lock file exists, but the previous script has terminated. Remove the lock file.
@@ -213,7 +222,7 @@ if(count($discord_results) > 0) {
 }
 
 // Function to check if process is running
-function isProcessRunning($pid) {
+function isBotRunning($pid) {
     if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
         // Windows
         exec("tasklist /FI \"PID eq $pid\"", $output);
@@ -226,7 +235,11 @@ function isProcessRunning($pid) {
     }
 }
 
-
-
-
-
+function isProcessRunning($pid2) {
+    try {
+        // Sending a signal 0 to the process to check if it's running
+        return posix_kill($pid2, 0);
+    } catch (Exception $e) {
+        return false;
+    }
+}
