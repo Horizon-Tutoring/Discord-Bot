@@ -1,7 +1,7 @@
 <?php
 
 $botRunning = __DIR__.'/bot-script.lock';
-$lockFile = __DIR__.'/api-script.lock';
+$apiRunning = __DIR__.'/api-script.lock';
 
 // Check that the API Script is not still running
 if (file_exists($botRunning)) {
@@ -21,10 +21,10 @@ if (file_exists($botRunning)) {
 }
 
 // Check that the API Script is not still running
-if (file_exists($lockFile)) {
+if (file_exists($apiRunning)) {
 
     // Check the PID stored in the lock file
-    $pid2 = intval(file_get_contents($lockFile));
+    $pid2 = intval(file_get_contents($apiRunning));
 
     // Check if the process with the stored PID is still running
     if (isProcessRunning($pid2)) {
@@ -36,19 +36,20 @@ if (file_exists($lockFile)) {
             echo "[SYSTEM] Previous script terminated successfully.\n";
         } else {
             echo "[SYSTEM] Failed to terminate the previous script.\n";
+            exit;
         }
 
         // Remove the lock file
-        unlink($lockFile);
+        unlink($apiRunning);
 
     } else {
         // The lock file exists, but the previous script has terminated. Remove the lock file.
-        unlink($lockFile);
+        unlink($apiRunning);
     }
 }
 
 // Create the lock file
-file_put_contents($lockFile, getmypid());
+file_put_contents($apiRunning, getmypid());
 
 echo "[SYSTEM] API code not currently running. Checking for any required messages. \n \n";
 
