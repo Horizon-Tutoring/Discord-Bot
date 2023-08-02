@@ -32,7 +32,7 @@ if (file_exists($lockFile)) {
         echo "[SYSTEM] The Horizon Tutoring Bot is still running on the server. Terminating previous script.\n";
 
         // Attempt to terminate the previous script
-        if (posix_kill($pid, SIGTERM)) {
+        if (posix_kill($pid2, SIGTERM)) {
             echo "[SYSTEM] Previous script terminated successfully.\n";
         } else {
             echo "[SYSTEM] Failed to terminate the previous script.\n";
@@ -198,7 +198,6 @@ if(count($discord_results) > 0) {
         );
 
         // Update all DB entries so they do not get sent more than once.
-
         $apiBaseUrl = $_ENV['API_ENDPOINT'];
         $httpClientPost = new GuzzleHttp\Client();
         
