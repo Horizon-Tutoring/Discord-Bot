@@ -43,7 +43,7 @@ date_default_timezone_set('Australia/Brisbane');
 
 $discord = new Discord([
     'token' => $_ENV['BOT_TOKEN'],
-    'intents' => Intents::getDefaultIntents()
+    'intents' => Intents::getDefaultIntents() | Intents::GUILD_MEMBERS | Intents::GUILD_MESSAGE_REACTIONS
 //      | Intents::MESSAGE_CONTENT, // Note: MESSAGE_CONTENT is privileged, see https://dis.gd/mcfaq
 ]);
 
@@ -62,6 +62,8 @@ $discord->on('ready', function (Discord $discord) {
     ]);
     
     $discord->updatePresence($activity, false, 'online', false);
+
+    include __DIR__.'/bot/reactions.php';
 
     include __DIR__.'/bot/commands.php';
 });

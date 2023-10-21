@@ -138,17 +138,51 @@ require_once 'required_functions.php';
             $message->delete();
 
             $channel = $message->channel;
-            $channel->sendMessage('<@' . $message->author->id . '> pong!')->done(function (Message $responseMessage) use ($discord, $message) {
+            $channel->sendMessage('<@' . $message->author->id . '> understood. Sending Notify Information in 5 seconds!')->done(function (Message $responseMessage) use ($discord, $message) {
+                sleep(5);
+                
                 SendBotLog(
                     $discord, 
                     'COMMAND', 
                     '`!notify` command used by ' . $message->author->username,
                 );
 
-                sleep(5);
+                $channel2 = $discord->getChannel($_ENV['BOT_REQ']);
 
+                // Define the $embed variable here
+                $embed = [
+                    'title' => 'Available Commands',
+                    'description' => 'Here are some of my available commands. Not all might be available to you.',
+                    'footer' => [
+                        'text' => 'Service Notification',
+                    ],
+                    'fields' => [
+                        [
+                            'name' => '🤝',
+                            'value' => 'Notification whenever a new parent registers interest.',
+                        ],
+                        [
+                            'name' => '⛔',
+                            'value' => 'Notification whenever a session is cancelled.',
+                        ],
+                        [
+                            'name' => '📓',
+                            'value' => 'Notification whenever a user note is added.',
+                        ],
+                        
+                        // Add more commands here as needed
+                    ],
+                ];
+
+                $channel2->sendMessage('', false, $embed)->done(function (Message $sentMessage) use ($message, $discord) {
+                    $sentMessage->react('🤝')->done(function () {});
+                    $sentMessage->react('⛔')->done(function () {});
+                    $sentMessage->react('📓')->done(function () {});
+                });
+                
                 $responseMessage->delete();
             });
         }
+
 
     });
